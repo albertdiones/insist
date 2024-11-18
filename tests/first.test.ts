@@ -5,6 +5,7 @@ import insist from '..';
 test(
     'first test',
     async () => {
+        const maxRetry = 5;
         let x = 0;
         expect(insist).not.toBeFalsy()
         await insist(
@@ -17,10 +18,10 @@ test(
                 }
             ),
             {
-                maxRetry: 2
+                maxRetry: maxRetry
             }
         );
-        expect(x).toBe(2);
+        expect(x).toBe(maxRetry);
         return;
     }
 );
