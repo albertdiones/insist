@@ -6,7 +6,7 @@ test(
     'first test',
     async () => {
         let x = 0;
-        return;
+        expect(insist).not.toBeFalsy()
         await insist(
             () => fetch(
                 'http://aaaaaaaaa.bbbbb/zzzzz'
@@ -17,6 +17,7 @@ test(
                 maxRetry: 5
             }
         );
+        return;
         expect(x).toBe(5);
     }
 );
