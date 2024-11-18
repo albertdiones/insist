@@ -3,7 +3,7 @@ import { test, expect } from '@jest/globals'
 import insist from '..';
 
 test(
-    'first test',
+    'basic retry with default timeout',
     async () => {
         const maxRetry = 5;
         let x = 0;
@@ -23,5 +23,28 @@ test(
         );
         expect(x).toBe(maxRetry);
         return;
+    }
+);
+
+
+test(
+    'retry with timeout declaration',
+    async () => {
+        const maxRetry = 10;
+        const timeout = 20;
+        const expectedMinimumElapsedTime = maxRetry * timeout;
+        const startTime = Date.now();
+        expect(insist).not.toBeFalsy()
+        await insist(
+            () => fetch(
+                'http://aaaaaaaaa.bbbbb/zzzzz'
+            ),
+            {
+                maxRetry: maxRetry,
+                timeout: timeout
+            }
+        );
+        const timeElapsed = Date.now() - startTime;
+        expect(timeElapsed).toBeGreaterThanOrEqual(expectedMinimumElapsedTime);
     }
 );

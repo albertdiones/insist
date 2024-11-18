@@ -5,7 +5,7 @@ export default function insist(
     action: () => Promise<any>,
     options: {
         maxRetry: number,
-        //interval: number
+        timeout: number
     }
 ) {
     const repeater = new Repeater(
@@ -16,7 +16,7 @@ export default function insist(
             }
         ).catch(
             (error) => {
-                console.warn("caught error", error)
+                //console.warn("caught error", error)
                 // this.logger.warn(error);
                 // ignore for now
             }
@@ -25,7 +25,7 @@ export default function insist(
 
     // repeater.stop();
     return repeater.continuous(
-        500,
+        options.timeout ?? 500,
         options.maxRetry
     );
 }
