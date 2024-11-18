@@ -10,14 +10,17 @@ test(
         await insist(
             () => fetch(
                 'http://aaaaaaaaa.bbbbb/zzzzz'
-            ).then(
-                () => ++x
+            ).catch(
+                (e) => {
+                    ++x;
+                    throw e;
+                }
             ),
             {
-                maxRetry: 5
+                maxRetry: 2
             }
         );
+        expect(x).toBe(2);
         return;
-        expect(x).toBe(5);
     }
 );
