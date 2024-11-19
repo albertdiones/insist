@@ -1,13 +1,23 @@
 import Repeater from "add_repeater"
 
+interface LoggerInterface {
+    log(...messages: any[]): void;
+    error(...messages: any[]): void;
+    warn(...messages: any[]): void;
+    info(...messages: any[]): void;
+    debug(...messages: any[]): void;
+}
 
 export default function insist(
     action: () => Promise<any>,
     options: {
         maxRetries?: number,
-        timeout?: number
+        timeout?: number,
+        logger?: LoggerInterface
     } = {}
 ) {
+    const {logger = console} = options;
+
     let success = false;
     const repeater = new Repeater(
         () => action().then(
@@ -22,7 +32,8 @@ export default function insist(
                 // this.logger.warn(error);
                 // ignore for now
             }
-        )
+        ),
+        { logger: logger }
     );
 
     // repeater.stop();
