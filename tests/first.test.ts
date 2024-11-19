@@ -2,12 +2,15 @@ import { test, expect } from '@jest/globals'
 
 import insist from '..';
 
+const unexpectedErrorMessage = "UNEXPECTED_ERROR_SHOULD_NOT_HAPPEN";
+
 test(
     'basic retry with default timeout',
     async () => {
         const maxRetry = 5;
         let x = 0;
-        expect(insist).not.toBeFalsy()
+      
+
         await insist(
             () => fetch(
                 'http://aaaaaaaaa.bbbbb/zzzzz'
@@ -20,9 +23,16 @@ test(
             {
                 maxRetries: maxRetry
             }
-        );
-        expect(x).toBe(maxRetry);
-        return;
+        ).then(
+            () => {
+                throw unexpectedErrorMessage;
+            }
+        ).catch(
+            (err) => {
+                expect(err).not.toBe(unexpectedErrorMessage);
+                expect(x).toBe(maxRetry);
+            }
+        )
     }
 );
 
@@ -34,7 +44,6 @@ test(
         const timeout = 20;
         const expectedMinimumElapsedTime = maxRetry * timeout;
         const startTime = Date.now();
-        expect(insist).not.toBeFalsy()
         await insist(
             () => fetch(
                 'http://aaaaaaaaa.bbbbb/zzzzz'
@@ -43,8 +52,16 @@ test(
                 maxRetries: maxRetry,
                 timeout: timeout
             }
+        ).then(
+            () => {
+                throw unexpectedErrorMessage;
+            }
+        ).catch(
+            (err) => {
+                expect(err).not.toBe(unexpectedErrorMessage);
+                const timeElapsed = Date.now() - startTime;
+                expect(timeElapsed).toBeGreaterThanOrEqual(expectedMinimumElapsedTime);
+            }
         );
-        const timeElapsed = Date.now() - startTime;
-        expect(timeElapsed).toBeGreaterThanOrEqual(expectedMinimumElapsedTime);
     }
 );

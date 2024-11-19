@@ -8,10 +8,12 @@ export default function insist(
         timeout?: number
     } = {}
 ) {
+    let success = false;
     const repeater = new Repeater(
         () => action().then(
             (result) => {
                 repeater.stop();
+                success = true;
                 return result;
             }
         ).catch(
@@ -27,5 +29,11 @@ export default function insist(
     return repeater.continuous(
         options.timeout ?? 500,
         options.maxRetries ?? null
+    ).then(
+        () => {
+            if (!success) {
+                throw `Insist: ${repeater.runs}/${options.maxRetries}  retries exhausted`;
+            }
+        }
     );
 }
