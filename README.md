@@ -6,6 +6,7 @@ Todos:
  * logger support
  * custom condition for retrying
  * throw an error if maxRetries is exhausted, but still fails
+ * all options should be optional/not required
  
 
 ```
