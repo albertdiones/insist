@@ -40,9 +40,9 @@ test(
 test(
     'retry with timeout declaration',
     async () => {
-        const maxRetry = 10;
-        const timeout = 20;
-        const expectedMinimumElapsedTime = maxRetry * timeout;
+        const maxRetry = 3;
+        const timeout = 3000;
+        const expectedMinimumElapsedTime = (maxRetry-1) * timeout;
         const startTime = Date.now();
         await insist(
             () => fetch(
