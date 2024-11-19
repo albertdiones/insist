@@ -8,13 +8,10 @@ export default function insist(
         timeout?: number
     } = {}
 ) {
-    const {maxRetries = null} = options;
-    let success = false;
     const repeater = new Repeater(
         () => action().then(
             (result) => {
                 repeater.stop();
-                success = true;
                 return result;
             }
         ).catch(
@@ -22,13 +19,6 @@ export default function insist(
                 //console.warn("caught error", error)
                 // this.logger.warn(error);
                 // ignore for now
-                if (maxRetries === null) {
-                    return null
-                }
-                console.log('repeater.runs', repeater.runs);
-                if (repeater.runs >= maxRetries) {
-                    
-                }
             }
         )
     );
@@ -36,13 +26,6 @@ export default function insist(
     // repeater.stop();
     return repeater.continuous(
         options.timeout ?? 500,
-        maxRetries
-    ).then(
-        () => {
-            console.log("DONE!!!!!!!!!!!!", success);
-            if (!success) {
-                throw "Max retries exhausted for insist";
-            }
-        }
-    )
+        options.maxRetries ?? null
+    );
 }
