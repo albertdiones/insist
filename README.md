@@ -19,5 +19,7 @@ insist(
   }
 ).then(
    // deal with success
+).catch(
+  // deal with failure
 )
 ```
