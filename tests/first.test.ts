@@ -18,7 +18,7 @@ test(
                 }
             ),
             {
-                maxRetry: maxRetry
+                maxRetries: maxRetry
             }
         );
         expect(x).toBe(maxRetry);
@@ -40,7 +40,7 @@ test(
                 'http://aaaaaaaaa.bbbbb/zzzzz'
             ),
             {
-                maxRetry: maxRetry,
+                maxRetries: maxRetry,
                 timeout: timeout
             }
         );

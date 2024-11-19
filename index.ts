@@ -4,7 +4,7 @@ import Repeater from "add_repeater"
 export default function insist(
     action: () => Promise<any>,
     options: {
-        maxRetry: number,
+        maxRetries: number,
         timeout: number
     }
 ) {
@@ -26,6 +26,6 @@ export default function insist(
     // repeater.stop();
     return repeater.continuous(
         options.timeout ?? 500,
-        options.maxRetry
+        options.maxRetries
     );
 }

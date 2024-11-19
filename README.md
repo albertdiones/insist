@@ -2,7 +2,7 @@
 Repeat a promise until no error has been thrown
 
 Todos:
- * rename maxRetry to maxRetries
+ * [x] rename maxRetry to maxRetries
  * logger support
  * custom condition for retrying
  * throw an error if maxRetries is exhausted, but still fails
