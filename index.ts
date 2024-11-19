@@ -4,9 +4,9 @@ import Repeater from "add_repeater"
 export default function insist(
     action: () => Promise<any>,
     options: {
-        maxRetries: number,
-        timeout: number
-    }
+        maxRetries?: number,
+        timeout?: number
+    } = {}
 ) {
     const repeater = new Repeater(
         () => action().then(
@@ -26,6 +26,6 @@ export default function insist(
     // repeater.stop();
     return repeater.continuous(
         options.timeout ?? 500,
-        options.maxRetries
+        options.maxRetries ?? null
     );
 }
