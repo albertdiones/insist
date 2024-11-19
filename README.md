@@ -1,6 +1,12 @@
 # insist
 Repeat a promise until no error has been thrown
 
+Todos:
+ * rename maxRetry to maxRetries
+ * logger support
+ * custom condition for retrying
+ 
+
 ```
 import insist from 'insist';
 
