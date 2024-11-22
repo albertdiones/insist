@@ -15,7 +15,7 @@ export default function insist(
         timeout?: number,
         logger?: LoggerInterface
     } = {}
-) {
+): Promise<any> {
     const {logger = console} = options;
 
     let success = false;
