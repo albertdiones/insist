@@ -19,16 +19,18 @@ export default function insist(
     const {logger = console} = options;
 
     let success = false;
+    let promiseResult;
     const repeater = new Repeater(
         () => action().then(
             (result) => {
                 repeater.stop();
                 success = true;
+                promiseResult=result;
                 return result;
             }
         ).catch(
             (error) => {
-                //console.warn("caught error", error)
+                // console.warn("caught error", error)
                 // this.logger.warn(error);
                 // ignore for now
             }
@@ -45,6 +47,7 @@ export default function insist(
             if (!success) {
                 throw `Insist: ${repeater.runs}/${options.maxRetries}  retries exhausted`;
             }
+            return promiseResult;
         }
     );
 }

@@ -9,7 +9,7 @@ test(
     async () => {
         const maxRetry = 5;     
 
-        insist(
+        await insist(
             () => fetch(
                 'https://pokeapi.co/api/v2/pokemon/pikachu'
             ),
