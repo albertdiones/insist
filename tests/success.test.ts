@@ -12,18 +12,6 @@ test(
         await insist(
             () => fetch(
                 'https://pokeapi.co/api/v2/pokemon/pikachu'
-            )
-            // this already works as a custom assertion ???
-            .then(
-                (response) => response.json()
-            )            
-            .then(
-                (json) => {
-                    if (!json) {
-                        throw "Invalid json"
-                    }
-                    return json;
-                }
             ),
             {
                 maxRetries: maxRetry

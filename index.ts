@@ -13,15 +13,10 @@ export default function insist(
     options: {
         maxRetries?: number,
         timeout?: number,
-        logger?: LoggerInterface,
-        assertion?: (result: any) => boolean
+        logger?: LoggerInterface
     } = {}
 ): Promise<any> {
-    // defaults
-    const {
-        logger = console
-        assertion = (result) => Boolean(result)
-    } = options;
+    const {logger = console} = options;
 
     let success = false;
     let promiseResult;
